@@ -55,17 +55,20 @@ CREATE TABLE IF NOT EXISTS wallet_transactions (
 );
 
 -- 5. جدول المدفوعات
-CREATE TABLE IF NOT EXISTS payments (
+CREATE TABLE IF NOT EXISTS wallet_payments (
     id BIGSERIAL PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     worker_id BIGINT NOT NULL REFERENCES workers(id) ON DELETE CASCADE,
     job_request_id BIGINT REFERENCES job_requests(id) ON DELETE SET NULL,
     amount DECIMAL(15,2) NOT NULL,
-    payment_method VARCHAR(20) NOT NULL,
-    payment_status VARCHAR(20) DEFAULT 'PENDING',
+    currency VARCHAR(10) DEFAULT 'IQD',
+    payment_method VARCHAR(50) NOT NULL,
+    payment_status VARCHAR(30) NOT NULL DEFAULT 'PENDING',
     transaction_id VARCHAR(100),
-    payment_gateway VARCHAR(50),
+    gateway VARCHAR(50),
     gateway_response TEXT,
+    description TEXT,
+    notes TEXT,
     paid_at TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -156,8 +159,8 @@ CREATE INDEX IF NOT EXISTS idx_notifications_created ON notifications(created_at
 CREATE INDEX IF NOT EXISTS idx_fcm_user ON fcm_tokens(user_id);
 CREATE INDEX IF NOT EXISTS idx_wallets_user ON wallets(user_id);
 CREATE INDEX IF NOT EXISTS idx_wallet_trans_wallet ON wallet_transactions(wallet_id);
-CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);
-CREATE INDEX IF NOT EXISTS idx_payments_worker ON payments(worker_id);
+CREATE INDEX IF NOT EXISTS idx_wallet_payments_user ON wallet_payments(user_id);
+CREATE INDEX IF NOT EXISTS idx_wallet_payments_worker ON wallet_payments(worker_id);
 CREATE INDEX IF NOT EXISTS idx_conversations_user ON conversations(user_id);
 CREATE INDEX IF NOT EXISTS idx_conversations_worker ON conversations(worker_id);
 CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages(conversation_id);
