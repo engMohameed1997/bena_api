@@ -1,0 +1,18 @@
+# PostgreSQL Configuration with Flyway Fix
+# استخدم هذا Profile: mvn spring-boot:run -Dspring-boot.run.profiles=pg
+
+spring:
+  flyway:
+    enabled: true
+    out-of-order: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.bena.api: INFO
+    org.flywaydb: DEBUG
