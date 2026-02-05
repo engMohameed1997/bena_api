@@ -25,16 +25,16 @@ public class WalletTransaction {
     private Wallet wallet;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @Column(name = "transaction_type", length = 20, nullable = false)
     private TransactionType type;
 
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "balance_before", nullable = false, precision = 15, scale = 2)
+    @Column(name = "balance_before", precision = 15, scale = 2)
     private BigDecimal balanceBefore;
 
-    @Column(name = "balance_after", nullable = false, precision = 15, scale = 2)
+    @Column(name = "balance_after", precision = 15, scale = 2)
     private BigDecimal balanceAfter;
 
     @Column(name = "reference_type", length = 50)
